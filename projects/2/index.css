@@ -5,3 +5,5 @@ h1 {font-family: garamond;font-size: 40px;color: #4f86f7}
 h2 {font-family: garamond;font-size: 30px;color: #4f86f7;}
 
 p {font-family: garamond;font-size:20px; margin-top: 50px;margin-bottom: 50px;margin-right: 150px;margin-left: 150px;color: #4f86f7;}
+
+button {font-family: garamond;background-color: #4f86f7; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;}
