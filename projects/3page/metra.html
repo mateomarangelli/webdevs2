@@ -1,0 +1,137 @@
+<!doctype HTML>
+<html>
+  <head>
+    <!-- Material Design Lite -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <!-- Material Design icon font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
+  <body>
+    <!-- The drawer is always open in large screens. The header is always shown,
+      even in small screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
+                mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                      mdl-textfield--floating-label mdl-textfield--align-right">
+            <label class="mdl-button mdl-js-button mdl-button--icon"
+                   for="fixed-header-drawer-exp">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" name="sample"
+                     id="fixed-header-drawer-exp">
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Directory</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="youtube.html">YouTube Searcher</a>
+          <a class="mdl-navigation__link" href="metra.html">CTA Bus Tracker</a>
+          <a class="mdl-navigation__link" href="jailroot.html">Jailbreaker (IOS) and Rooter (Android)</a>
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        <div class="page-content"><!-- Your content goes here --></div>
+ 
+  <div id="Westbound"> 
+
+  <div id="Eastbound">
+
+  <div id="Northbound">
+
+  <div id="Southbound">  
+
+      </main>
+    </div>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+      /*global $*/
+        
+        $(function() {
+          
+          var apiPassThruUrl = "https://polar-garden-75406.herokuapp.com/apiPassThru.php";
+          
+          var apiEndpoint = "http://ctabustracker.com/bustime/api/v2/getpredictions";
+          
+          $.ajax({
+              url: apiPassThruUrl,
+              dataType: "json",
+              method: 'GET',
+              data: {"apiEndpoint": apiEndpoint,
+                      "key" : "zehKFaJzTxu3NBbF92jLCkJYz",
+                      "format": "json",
+                      "rt" : "152,49",
+                      "stpid" : "12571,12525,8417,8195"
+              }
+            }).done (function (data) {
+              console.log(data);
+             
+             $("#Westbound").append(
+               "<h2>" +
+               "<i>" +
+               "Westbound Routes" +
+               "</i>" +
+               "</h2>"
+               );
+               
+               $("#Eastbound").append(
+               "<h2>" +
+               "<i>" +
+               "Eastbound Routes" +
+               "</i>" +
+               "</h2>"
+               );
+             
+               $("#Northbound").append(
+               "<h2>" +
+               "<i>" +
+               "Northbound Routes" +
+               "</i>" +
+               "</h2>"
+               );
+             
+               $("#Southbound").append(
+               "<h2>" +
+               "<i>" +
+               "Southbound Routes" +
+               "</i>" +
+               "</h2>"
+               );
+             
+             
+              $.each(data["bustime-response"]["prd"], function(i,v) {
+          
+                    $("#" + v.rtdir).append(
+                    "<p>" +
+                    "Route #" + 
+                    v.rt +
+                    "<br>" +
+                    "Stop Name: " +
+                    v.stpnm +
+                    "<br>" +
+                    "Predicted Time (YYYY:MM:DD HH:MM): " +
+                    v.prdtm + 
+                    "<br>" +
+                    "Time Remaining (Minutes): " +
+                    v.prdctdn +
+                    "</p>" 
+                    
+                    );
+    
+                });
+                
+              });
+
+            });
+        
+            
+  
+  </script>
+  </body>
+</html>
