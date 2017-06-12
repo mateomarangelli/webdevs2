@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Canvas Game</title>
+  </head>
+  <body>
+    <canvas id = "myCanvas"></canvas>
+    <div id = "lifecounter"></div>
+    <div id = "timer"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+    
+    // Timer for survival, add 8-bit music, random spawns for benefit, health bar/text of 3, hitboxes
+    
+    /* global $*/
+    /*global Image*/
+    
+      var canvas = document.getElementById("myCanvas");
+      var context = canvas.getContext("2d");
+      canvas.setAttribute("width", window.innerWidth + "px");
+      canvas.setAttribute("height", window.innerHeight + "px");
+      var livesRemaining = 3;
+      var score = 0;
+      var level = 1;
+      var paused = false;
+      
+      var player = {x: 635 - 25, y: 350 - 25, costume: new Image(), xspeed: xSpeed, yspeed: ySpeed};
+      var xSpeed = 0;
+      var ySpeed = 0;
+      
+      var background = new Image();
+      background.src = "canvasbackground.png";
+      player.costume.src = "playermodel.png";
+      
+      var harm = {x: 100, y: 100, costume: new Image(), speed: 1};
+      harm.costume.src = "harm.png";
+      var obstacles = [];
+      var frames = 0;
+      
+      var benefit = {x: 0, y: 0, costume: new Image(), speed: 1};
+      benefit.costume.src = "benefit.png";
+      
+    
+      
+      /*
+      
+        main animation loop
+      
+      */
+      function animate() {
+        
+        player.x += xSpeed;
+      
+        
+         player.y += ySpeed;
+        
+        
+        frames += 1;
+        if (frames % 10 == 0) {
+          var direction = Math.floor(Math.random()*(4));
+          if (direction == 0) {
+            obstacles.push([Math.floor(Math.random()*(canvas.width - 50)), 0, direction]);
+          } else if (direction == 1) {
+            obstacles.push([Math.floor(Math.random()*(canvas.width - 50)), canvas.height, direction]);
+          } else if (direction == 2) {
+            obstacles.push([0, Math.floor(Math.random()*(canvas.height - 50)), direction]);
+          } else if (direction == 3) {
+            obstacles.push([canvas.width, Math.floor(Math.random()*(canvas.height - 50)), direction]);
+          }
+        }
+        
+        
+        
+        //console.log("obstacles.length", obstacles.length);
+        
+         // get the background
+        
+          context.clearRect(0,0,canvas.width,canvas.height);
+          context.drawImage(background,0,0,canvas.width,canvas.height);        
+        
+        //for (var obstacle of obstacles) {
+        $.each(obstacles, function(i,v) {
+          context.beginPath();
+          context.drawImage(harm.costume, v[0], v[1], 50, 50);
+          context.closePath();
+          if (v[2] == 0) {
+            v[1]+=3;
+          } else if (v[2] == 1) {
+            v[1]-=3;
+          } else if (v[2] == 2) {
+            v[0]+=3;
+          } else if (v[2] == 3) {
+            v[0]-=3;
+          }
+        })
+          
+        
+        
+        
+        
+        
+        
+
+        
+        // update harm and benefit y coordinates
+        
+        
+        
+       
+        
+        // draw the player
+        
+          context.drawImage(player.costume, player.x, player.y, 30, 40);
+        
+        // draw harm 
+        
+        
+        
+        // check for and handle edge condition
+        
+        
+        
+        // check for and handle harm collision
+      
+      
+      
+        // draw benefit
+        
+         context.drawImage(benefit.costume, benefit.x, benefit.y, 50, 50);
+        
+        // check for and handle edge condition
+        
+        
+        
+        // check for benefit collision
+        
+        
+        
+        // draw text (lives and score)
+        
+  
+        //  if the game has not been paused, 
+        if (!paused) {
+          requestAnimationFrame(animate);
+        }
+        
+      }
+          animate();
+      
+      //  event handler for moving player
+
+        document.onkeydown = function(e) {
+            if (e.keyCode == 65) {   
+              xSpeed = -6;
+            } else if (e.keyCode == 68) {
+              xSpeed = 6;
+            } else if (e.keyCode == 87) {
+              ySpeed = -6;
+            } else if (e.keyCode == 83) {
+              ySpeed = 6; 
+      }
+      
+        document.onkeyup = function(e) {
+            if (e.keyCode == 65) {   
+              xSpeed = 0;
+            } else if (e.keyCode == 68) {
+              xSpeed = 0;
+            } else if (e.keyCode == 87) {
+              ySpeed = 0;
+            } else if (e.keyCode == 83) 
+              ySpeed = 0;
+      };
+      
+
+      };
+      
+      function collisiondetection(x, y) {
+        if (x[0] + x[2]) > y[0] && (x[0] + x[2]) < (y[0] + y[2]) || (y[0] + y[2]) > x[0] && (y[0] + y[2]) < (x[0] + x[2]) {
+          
+        }
+      }
+      
+      
+      
+      //    use onKeyPress event, and change the player.y value based on the up/down keys
+      
+      
+      
+      
+      
+    </script>
+    
+    
+  </body>
+</html>
